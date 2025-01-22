@@ -1,10 +1,10 @@
-package PetitBloom;
+package merchantPrince;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Fbpro1ApplicationTests {
+class merchantPrinceApplicationTests {
 
 	@Test
 	void contextLoads() {
