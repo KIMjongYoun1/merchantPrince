@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 	/*
 	 * 
@@ -31,7 +31,7 @@ public class UserController {
 	}
 	
 	// 사용자조회 api (로그인유저아님 판매자정보등 상대 프로필)
-	@GetMapping("/{user}")
+	@GetMapping("/{userId}")
 	public ResponseEntity<UserResponseDTO> getUser(@PathVariable String userId){
 		UserResponseDTO responseDTO = userService.findUserById(userId);
 		return ResponseEntity.ok(responseDTO);
@@ -57,4 +57,9 @@ public class UserController {
 		return ResponseEntity.ok(responseDTO);
 	}
 	
+	@PostMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "로그아웃!";
+	}
 }
