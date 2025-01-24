@@ -13,6 +13,7 @@
 import axios from "axios";
 
 export default {
+    name: "UserProfile",
     data(){
         return {
             user : null,

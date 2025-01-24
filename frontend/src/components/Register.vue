@@ -24,6 +24,7 @@
 import axios from "axios";
 
 export default {
+    name: "UserRegister",
     data(){
         return {
             userId:"",
@@ -37,20 +38,23 @@ export default {
             try {
                 // api호출 백앤드 /register
                 const payload = {
-                    userId: this.userid,
+                    userId: this.userId,
                     userName: this.userName,
                     password: this.password,
                     email: this.email,
                 };
-
                 console.log("가입정보", payload);
+                // axios를 사용해 API 호출
+             const response = await axios.post("/users/register", payload);
+                
                 alert("로그인 성공");
                 console.log("로그인", response.data);
 
                 // 로그인 성공후 이동페이지
                 this.$router.push("/login");
             } catch (error) {
-                console.error("회원가입입 실패", error);
+                console.error("회원가입 실패", error.response || error); // 자세한 에러 정보 출력
+
                 alert("회원가입 실패 다시 시도해주세요");
             }
         },

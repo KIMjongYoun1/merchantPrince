@@ -18,6 +18,7 @@
 import axios from "axios";
 
 export default {
+    name: "UserLogin",
     data(){
         return {
             userId:"",
@@ -32,10 +33,9 @@ export default {
                     userId: this.userid,
                     password: this.password,
                 });
-                const response = await axios.post("/users/login", {
-                    userId: this.userid,
-                    password: this.password,
-                    
+                const response = await axios.post("http://localhost:10005/users/login", {
+                userId: this.userId,
+                password: this.password,
                 });
                 alert("로그인 성공");
                 console.log("로그인", response.data);
