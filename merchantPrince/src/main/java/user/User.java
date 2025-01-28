@@ -37,7 +37,7 @@ public class User {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 	
-	@PrePersist
+	@PrePersist //  저장되기전에 먼저 실행한다고 함.
 	public void prePersist() {
 		this.createdAt = LocalDateTime.now();
 	}

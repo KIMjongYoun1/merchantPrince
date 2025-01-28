@@ -1,5 +1,6 @@
 package user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,16 +20,16 @@ public class UserController {
 	 * 
 	 * 
 	 * */
-	private final UserService userService;
+	@Autowired
+	private UserService userService;
 	
-	public UserController(UserService userService) {
-		this.userService = userService;
-	}
+	
 	// 회원가입 api
 	@PostMapping("/register")
-	public ResponseEntity<String> regitserUser(@RequestBody UserRequestDTO userRequestDTO){
+	public ResponseEntity<UserResponseDTO> regitserUser(@RequestBody UserRequestDTO userRequestDTO){
 		System.out.println("회원가입 요청 도착:");
-		return ResponseEntity.ok("회원가입 완료");
+		UserResponseDTO responseDTO = userService.registerUser(userRequestDTO);
+		return ResponseEntity.status(201).body(responseDTO);
 	}
 	
 	// 사용자조회 api (로그인유저아님 판매자정보등 상대 프로필)
@@ -41,13 +42,13 @@ public class UserController {
 	
 	// 로그인 api
 	@PostMapping("/login")
-	public ResponseEntity<UserResponseDTO> login(@RequestBody UserRequestDTO userRequestDTO){
+	public ResponseEntity<UserResponseDTO> login(@RequestBody UserRequestDTO userRequestDTO, HttpSession session){
 		System.out.println("로그인 api 호출");
-		UserResponseDTO responseDTO = userService.login(userRequestDTO);
+		UserResponseDTO responseDTO = userService.login(userRequestDTO, session);
 		return ResponseEntity.ok(responseDTO);
 	}
 	
-	// 로그인 사용자 프로필 조회 
+	// 로그인 사용자 프로필 조회 - 서비스로직에 있어야함 셀러에서는 서비스로직 구분해서 컨트롤러 호출만 함
 	@GetMapping("/profile")
 	public ResponseEntity<UserResponseDTO> getProfile(HttpSession session){
 		System.out.println("로그인 사용자 프로필 api 호출");
