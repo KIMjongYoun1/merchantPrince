@@ -1,7 +1,10 @@
 package product;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
+import productoption.ProductOptionRequestDTO;
 
 @Getter
 @Setter
@@ -13,6 +16,8 @@ public class ProductResponseDTO {
 	private int price;
 	private int stockQuantity;
 	private String categofyName;
+	private List<String> imageUrls; // 상품 이미지목록 추가
+	private List<ProductOptionRequestDTO> options; // 상품 오션 목록 추가
 	
 	public ProductResponseDTO(Product product) {
 		this.productId = product.getProductId();

@@ -32,7 +32,7 @@ public class UserController {
 		return ResponseEntity.status(201).body(responseDTO);
 	}
 	
-	// 사용자조회 api (로그인유저아님 판매자정보등 상대 프로필)
+	// 사용자조회 api (로그인유저아님 판매자정보등 상대 프로필) 필요없으면 삭제예정 셀러 구현함
 	@GetMapping("/{userId}")
 	public ResponseEntity<UserResponseDTO> getUser(@PathVariable String userId){
 		System.out.println("사용자조회 api 호출");

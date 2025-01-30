@@ -1,9 +1,12 @@
 package product;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
+import productoption.ProductOptionRequestDTO;
 
 @Getter
 @Setter
@@ -22,6 +25,9 @@ public class ProductRequestDTO {
 	
 	private Long categoryId;
 	
+	private List<String> imageUrls; // 상품 이미지목록 추가
+	
+	private List<ProductOptionRequestDTO> options; // 상품 오션 목록 추가
 	
 	
 }
