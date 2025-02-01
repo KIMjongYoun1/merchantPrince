@@ -117,6 +117,11 @@ public class ProductService {
 	            .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));  // 상품 조회
 	}
 	
+	// 상품 전체조회
+	public List<Product> getAllproduct(){
+		return productRepository.getAllproduct();
+	}
+	
 	// 상품 삭제
 	public void deleteProduct(Long productId) {
 		Product product = productRepository.findById(productId)
