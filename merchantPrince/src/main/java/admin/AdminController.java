@@ -21,13 +21,19 @@ import product.ProductResponseDTO;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-	
+
+	/*
+	 * 리턴방식 이 다름 어드민에 사용된 리턴방식 장점 ResponseEntity를 사용하면 HTTP 상태 코드(200, 201, 204 등)를
+	 * 명확하게 설정 가능. 예외 발생 시 ResponseEntity.status(400).body("잘못된 요청입니다") 같은 방식으로 오류
+	 * 메시지 관리가 용이. API의 RESTful 규칙을 더 철저히 지킬 수 있음 -> 익셉션 관련내용 추가시 활용
+	 */
+
 	@Autowired
 	private AdminService adminService;
-	
-	//상품 등록 api
+
+	// 상품 등록 api
 	@PostMapping
-	public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO productRequestDTO){
+	public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
 		Product product = adminService.createProduct(productRequestDTO);
 		ProductResponseDTO responseDTO = new ProductResponseDTO(product);
 		return ResponseEntity.status(201).body(responseDTO);
@@ -35,12 +41,13 @@ public class AdminController {
 //		의미: 요청이 성공적으로 처리되어 새로운 리소스가 생성되었음을 나타냅니다.
 //		언제 사용?: 새 데이터를 생성하는 API에서 사용됩니다. 예를 들어, 사용자가 상품을 새로 등록하는 경우 
 //		POST 요청이 성공적으로 처리되면, 새로 생성된 리소스(상품)를 반환하면서 201 응답을 보냅니다.
-		
+
 	}
-	
-	//상품 수정 api
+
+	// 상품 수정 api
 	@PutMapping("/{productId}")
-	public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long productId, @RequestBody ProductRequestDTO productRequestDTO){
+	public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long productId,
+			@RequestBody ProductRequestDTO productRequestDTO) {
 		Product product = adminService.updateProduct(productId, productRequestDTO);
 		ProductResponseDTO responseDTO = new ProductResponseDTO(product);
 		return ResponseEntity.ok(responseDTO);
@@ -49,10 +56,10 @@ public class AdminController {
 //		언제 사용?: 데이터 조회와 같은 읽기 작업에서 사용됩니다. 예를 들어, 
 //		상품 목록 조회와 같이 데이터를 성공적으로 반환하는 경우에 200 응답을 보냅니다.
 	}
-	
-	//상품 삭제 api
+
+	// 상품 삭제 api
 	@DeleteMapping("{productId}")
-	public ResponseEntity<Void> deleteProduct(@PathVariable Long productId){
+	public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
 		adminService.deleteProduct(productId);
 		return ResponseEntity.noContent().build();
 		// 204응답
@@ -60,21 +67,20 @@ public class AdminController {
 //		언제 사용?: 리소스를 삭제하는 작업 후, 반환할 내용이 없을 때 사용됩니다. 
 //		예를 들어, 사용자가 상품을 삭제했을 때 삭제된 후에는 반환할 데이터가 없으므로 204 상태 코드가 사용됩니다.
 	}
-	
+
 	// 모든상품 조회 호출
 	@GetMapping
-	public ResponseEntity<List<ProductResponseDTO>> getAllProducts(){
+	public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
 		List<Product> products = adminService.getAllProduct();
-		List<ProductResponseDTO> responseDTO = products.stream()
-												.map(ProductResponseDTO::new)
-												.collect(Collectors.toList());
+		List<ProductResponseDTO> responseDTO = products.stream().map(ProductResponseDTO::new)
+				.collect(Collectors.toList());
 		return ResponseEntity.ok(responseDTO);
-		
+
 	}
-	
+
 	// 개별상품 조회
 	@GetMapping("/{productId}")
-	public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable Long productId){
+	public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable Long productId) {
 		Product product = adminService.getProduct(productId);
 		ProductResponseDTO responseDTO = new ProductResponseDTO(product);
 		return ResponseEntity.ok(responseDTO);
